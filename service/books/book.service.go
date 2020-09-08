@@ -1,7 +1,7 @@
 package books
 
 import (
-	domain "github.com/alainmucyo/crud/domain/books"
+	domain "github.com/alainmucyo/crud/repository/books"
 	"github.com/alainmucyo/crud/entity"
 )
 
