@@ -1,27 +1,24 @@
-package controller
+package books
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/alainmucyo/crud/model"
-	"github.com/alainmucyo/crud/views"
-	"github.com/gorilla/mux"
+	"github.com/alainmucyo/crud/entity"
+	"github.com/alainmucyo/crud/service/books"
 	"net/http"
 )
 
-var Books []views.Book
-
 func GetBooks(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	data,err :=model.GetBooks()
-	if err!=nil {
+	data, err := books.NewBookService().ListBooks()
+	if err != nil {
 		writer.Write([]byte("Error Occurred"))
 		return
 	}
 	json.NewEncoder(writer).Encode(data)
 }
 
-func ShowBook(writer http.ResponseWriter, request *http.Request) {
+/*func Show(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(request)
 	for _, book := range Books {
@@ -30,9 +27,9 @@ func ShowBook(writer http.ResponseWriter, request *http.Request) {
 			return
 		}
 	}
-}
+}*/
 
-func DeleteBook(writer http.ResponseWriter, request *http.Request) {
+/*func DeleteBook(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(request)
 	for index, book := range Books {
@@ -41,9 +38,9 @@ func DeleteBook(writer http.ResponseWriter, request *http.Request) {
 		}
 	}
 	json.NewEncoder(writer).Encode("Ok")
-}
+}*/
 
-func UpdateBook(writer http.ResponseWriter, request *http.Request) {
+/*func UpdateBook(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(request)
 	for index, book := range Books {
@@ -56,13 +53,13 @@ func UpdateBook(writer http.ResponseWriter, request *http.Request) {
 	book.ID = params["id"]
 	Books = append(Books, book)
 	json.NewEncoder(writer).Encode(book)
-}
+}*/
 
-func StoreBook(writer http.ResponseWriter, request *http.Request) {
+func CreateBook(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	var book views.Book
+	var book entity.Book
 	_ = json.NewDecoder(request.Body).Decode(&book)
-	err := model.CreateBook(book.Title, book.Isbn, book.Description)
+	_,err := books.NewBookService().StoreBook(&book)
 	if err != nil {
 		writer.Write([]byte("Some errors"))
 		fmt.Println(err)

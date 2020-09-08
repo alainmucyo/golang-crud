@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/alainmucyo/crud/model"
+	"github.com/alainmucyo/crud/data/database"
 	"github.com/alainmucyo/crud/routes"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
@@ -9,7 +9,8 @@ import (
 )
 
 func main() {
-	db := model.Connect()
+	//fmt.Println("Hello")
+	db := database.Connect()
 	defer db.Close()
 	println("Server started....")
 	log.Fatal(http.ListenAndServe(":8080", routes.Register()))
