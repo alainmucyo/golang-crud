@@ -13,5 +13,5 @@ func main() {
 	db := database.Connect()
 	defer db.Close()
 	println("Server started....")
-	log.Fatal(http.ListenAndServe(":8080", routes.Register()))
+	log.Fatal(http.ListenAndServe(":3000", routes.Register()))
 }
