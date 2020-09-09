@@ -20,9 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="597bf777-5b14-482d-abc3-b1d0b7f6f800" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/crud.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/crud.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/books/books.controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/books/books.controller.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/books/books.mapper.go" beforeDir="false" afterPath="$PROJECT_DIR$/data/books/books.mapper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/books/books.repository.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/books/book.service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/books/book.service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/books/books.repository.go" beforeDir="false" afterPath="$PROJECT_DIR$/repository/books/books.repository.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +43,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
   <component name="ProjectId" id="1gmcenadKegBwdGVjO7clc39zUE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -51,14 +56,16 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../golang-api-showcase-master" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data/books" />
+      <recent name="$PROJECT_DIR$/repository/books" />
       <recent name="$PROJECT_DIR$/entity" />
       <recent name="$PROJECT_DIR$/domain/books" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/controllers" />
     </key>
   </component>
   <component name="RunManager">

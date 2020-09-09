@@ -15,7 +15,12 @@ func GetBooks(writer http.ResponseWriter, request *http.Request) {
 		writer.Write([]byte("Error Occurred"))
 		return
 	}
-	json.NewEncoder(writer).Encode(data)
+	booksResponse := make([]BookResponse, len(data))
+	for i, elem := range data {
+		booksResponse[i] = toBooksResponse(&elem)
+	}
+	booksList := toBooksList(&booksResponse)
+	json.NewEncoder(writer).Encode(booksList)
 }
 
 /*func Show(writer http.ResponseWriter, request *http.Request) {
@@ -59,7 +64,7 @@ func CreateBook(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	var book entity.Book
 	_ = json.NewDecoder(request.Body).Decode(&book)
-	_,err := books.NewBookService().StoreBook(&book)
+	_, err := books.NewBookService().StoreBook(&book)
 	if err != nil {
 		writer.Write([]byte("Some errors"))
 		fmt.Println(err)

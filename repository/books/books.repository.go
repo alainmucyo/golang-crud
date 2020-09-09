@@ -45,7 +45,6 @@ func (rep *repository) ListBooks() ([]entity.Book, error) {
 		fmt.Println(err)
 		return nil, err
 	}
-	fmt.Println("Rows: ", rows)
 	selectedBooks := []entity.Book{}
 	for rows.Next() {
 		data := entity.Book{}
