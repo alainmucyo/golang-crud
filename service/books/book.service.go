@@ -1,8 +1,10 @@
 package books
 
 import (
-	domain "github.com/alainmucyo/crud/repository/books"
+	"fmt"
 	"github.com/alainmucyo/crud/entity"
+	domain "github.com/alainmucyo/crud/repository/books"
+
 )
 
 type BookService interface {
@@ -10,16 +12,21 @@ type BookService interface {
 	ListBooks() ([]entity.Book, error)
 }
 
-type Service struct{}
+type Service struct{
+	domain.BookRepository
+}
 
-func NewBookService() BookService {
-	return &Service{}
+func NewBookService(repository domain.BookRepository) BookService {
+	return &Service{
+		repository,
+	}
 }
 
 func (s *Service) StoreBook(book *entity.Book) (*entity.Book, error) {
-	return domain.NewBookRepository().CreateBook(book)
+	return s.BookRepository.CreateBook(book)
 }
 
 func (s *Service) ListBooks() ([]entity.Book, error) {
-	return domain.NewBookRepository().ListBooks()
+	fmt.Println("Listing books")
+	return s.BookRepository.ListBooks()
 }

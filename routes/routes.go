@@ -1,26 +1,16 @@
 package routes
 
 import (
+	bookController "github.com/alainmucyo/crud/data/books"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strings"
 )
-type Route struct {
-	URI          string
-	Method       string
-	Handler      func(writer http.ResponseWriter, request *http.Request)
-}
-/*func load() []Route{
-	routes := bookRoutes
-	return routes
-}*/
-func Register() *mux.Router {
-	r := mux.NewRouter()
-	/*for _,route:= range load(){
-		r.HandleFunc(route.URI,route.Handler).Methods(route.Method)
-	}*/
-	mount(r,"/api/",BookRouter())
 
+func RouteRegister(controller bookController.BookController) *mux.Router {
+
+	r := mux.NewRouter()
+	mount(r, "/api/", NewBookRouter(controller).BookRouter())
 	return r
 }
 func mount(r *mux.Router, path string, handler http.Handler) {
@@ -31,4 +21,3 @@ func mount(r *mux.Router, path string, handler http.Handler) {
 		),
 	)
 }
-

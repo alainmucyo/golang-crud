@@ -8,9 +8,23 @@ import (
 	"net/http"
 )
 
-func GetBooks(writer http.ResponseWriter, request *http.Request) {
+type BookController interface {
+	GetBooks(writer http.ResponseWriter, request *http.Request)
+	CreateBook(writer http.ResponseWriter, request *http.Request)
+}
+
+type Controller struct {
+	books.BookService
+}
+
+
+func NewBooksController(service books.BookService) BookController {
+	return &Controller{service}
+}
+
+func (c *Controller) GetBooks(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
-	data, err := books.NewBookService().ListBooks()
+	data, err := c.BookService.ListBooks()
 	if err != nil {
 		writer.Write([]byte("Error Occurred"))
 		return
@@ -21,6 +35,20 @@ func GetBooks(writer http.ResponseWriter, request *http.Request) {
 	}
 	booksList := toBooksList(&booksResponse)
 	json.NewEncoder(writer).Encode(booksList)
+}
+
+func (c *Controller) CreateBook(writer http.ResponseWriter, request *http.Request) {
+	writer.Header().Set("Content-Type", "application/json")
+	var book entity.Book
+	_ = json.NewDecoder(request.Body).Decode(&book)
+	_, err := c.BookService.StoreBook(&book)
+	if err != nil {
+		writer.Write([]byte("Some errors"))
+		fmt.Println(err)
+		return
+	}
+	writer.WriteHeader(http.StatusCreated)
+	json.NewEncoder(writer).Encode(book)
 }
 
 /*func Show(writer http.ResponseWriter, request *http.Request) {
@@ -59,17 +87,3 @@ func GetBooks(writer http.ResponseWriter, request *http.Request) {
 	Books = append(Books, book)
 	json.NewEncoder(writer).Encode(book)
 }*/
-
-func CreateBook(writer http.ResponseWriter, request *http.Request) {
-	writer.Header().Set("Content-Type", "application/json")
-	var book entity.Book
-	_ = json.NewDecoder(request.Body).Decode(&book)
-	_, err := books.NewBookService().StoreBook(&book)
-	if err != nil {
-		writer.Write([]byte("Some errors"))
-		fmt.Println(err)
-		return
-	}
-	writer.WriteHeader(http.StatusCreated)
-	json.NewEncoder(writer).Encode(book)
-}
