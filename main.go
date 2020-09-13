@@ -15,19 +15,22 @@ import (
 
 func main() {
 	//fmt.Println("Hello")
-	db := database.Connect()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Can't load .env")
+	}
+	DB_PASSWORD := os.Getenv("DB_PASSWORD")
+	DB_USERNAME := os.Getenv("DB_USERNAME")
+	DB_DATABASE := os.Getenv("DB_DATABASE")
+	DB_TYPE := os.Getenv("DB_TYPE")
+	db := database.Connect(DB_PASSWORD,DB_USERNAME,DB_DATABASE,DB_TYPE)
 	booksRep := bookRepository.NewBookRepository(db)
 	service := bookService.NewBookService(booksRep)
 	controller:=bookController.NewBooksController(service)
 	httpHandler := routes.RouteRegister(controller)
-	err := godotenv.Load()
-
-	if err != nil {
-		log.Fatal("Can't load .env")
-	}
-	port := os.Getenv("PORT")
-	url := os.Getenv("URL")
+	PORT := os.Getenv("PORT")
+	URL := os.Getenv("URL")
 	defer db.Close()
-	println("Server started at " + url + ":" + port)
-	log.Fatal(http.ListenAndServe(":"+port, httpHandler))
+	println("Server started at " + URL + ":" + PORT)
+	log.Fatal(http.ListenAndServe(":"+PORT, httpHandler))
 }
