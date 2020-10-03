@@ -1,10 +1,13 @@
 package main
 
 import (
+	authorController "github.com/alainmucyo/crud/data/authors"
 	bookController "github.com/alainmucyo/crud/data/books"
 	"github.com/alainmucyo/crud/data/database"
+	"github.com/alainmucyo/crud/repository/authors"
 	bookRepository "github.com/alainmucyo/crud/repository/books"
 	"github.com/alainmucyo/crud/routes"
+	authorService "github.com/alainmucyo/crud/service/authors"
 	bookService "github.com/alainmucyo/crud/service/books"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -23,11 +26,14 @@ func main() {
 	DB_USERNAME := os.Getenv("DB_USERNAME")
 	DB_DATABASE := os.Getenv("DB_DATABASE")
 	DB_TYPE := os.Getenv("DB_TYPE")
-	db := database.Connect(DB_PASSWORD,DB_USERNAME,DB_DATABASE,DB_TYPE)
+	db := database.Connect(DB_PASSWORD, DB_USERNAME, DB_DATABASE, DB_TYPE)
 	booksRep := bookRepository.NewBookRepository(db)
+	authorRep := authors.NewAuthorityRepository(db)
 	service := bookService.NewBookService(booksRep)
-	controller:=bookController.NewBooksController(service)
-	httpHandler := routes.RouteRegister(controller)
+	authorServ := authorService.NewAuthorService(authorRep)
+	controller := bookController.NewBooksController(service)
+	authorContr := authorController.NewAuthController(authorServ)
+	httpHandler := routes.RouteRegister(controller, authorContr)
 	PORT := os.Getenv("PORT")
 	URL := os.Getenv("URL")
 	defer db.Close()

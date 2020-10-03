@@ -18,9 +18,9 @@ func NewBookRouter(controller books.BookController) BookRouter {
 }
 func (controller *bookRouter) BookRouter() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/books", controller.GetBooks).Methods("GET")
+	r.HandleFunc("/", controller.GetBooks).Methods("GET")
 	//r.HandleFunc("/api/book/{id}", controller.ShowBook).Methods("GET")
-	r.HandleFunc("/books", controller.CreateBook).Methods("POST")
+	r.HandleFunc("/", controller.CreateBook).Methods("POST")
 	/*	r.HandleFunc("/api/book/{id}", controller.UpdateBook).Methods("PUT")
 		r.HandleFunc("/api/book/{id}", controller.DeleteBook).Methods("DELETE")*/
 	return r

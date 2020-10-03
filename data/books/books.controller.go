@@ -26,6 +26,7 @@ func (c *Controller) GetBooks(writer http.ResponseWriter, request *http.Request)
 	writer.Header().Set("Content-Type", "application/json")
 	data, err := c.BookService.ListBooks()
 	if err != nil {
+		writer.WriteHeader(http.StatusInternalServerError)
 		writer.Write([]byte("Error Occurred"))
 		return
 	}
